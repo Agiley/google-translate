@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 require 'rake/testtask'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 require 'rake/rdoctask'
 require 'rcov/rcovtask'
 
@@ -24,7 +24,8 @@ begin
       gemspec.authors = ["Alexander Shvets"]
       gemspec.files = FileList["CHANGES", "google-translate.gemspec", "Rakefile", "README", "VERSION",
                                "lib/**/*", "bin/**/*"]
-      gemspec.add_dependency "json_pure", ">= 1.1.4"   
+      gemspec.add_dependency "json_pure", ">= 1.1.4"
+      gemspec.add_dependency "httparty", ">= 0.6.1"   
 
       gemspec.executables = ['translate', 't']
       gemspec.requirements = ["none"]
@@ -67,8 +68,7 @@ task :"run:gem" do
   puts ruby("#{command}")
 end
 
-Spec::Rake::SpecTask.new do |task|
-  task.libs << 'lib'
+RSpec::Core::RakeTask.new do |task|
   task.pattern = 'spec/**/*_spec.rb'
   task.verbose = false
 end
