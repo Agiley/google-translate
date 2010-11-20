@@ -2,14 +2,18 @@
 
 = Installing Google-Translate
 
-== Installing the Gem
-    $ gem install google-translate
+== Installing the Gem (using Bundler)
+Add the following to your Gemfile:
+gem 'google-translate', :git => 'git://github.com/Agiley/google-translate.git', :branch => 'master', :require => 'google_translate'
+
+== Updates compared to https://github.com/shvets/google-translate :
+- Now uses HTTParty to perform HTTP calls
+- Now uses HTTP POSTs when performing translations (allows you to send up to 5,000 characters when translating)
 
 == Usage
-
-    translate list                 - displays the list of supported languages
-    translate detect "hello world" - detects language of text
-    translate en:ru "hello world"  - or
-    translate en:ru hello world    - translates from en to ru
-    translate ru "hello world"     - or 
-    translate ru hello world       - translated from auto-detected language to ru 
+translate list                 - displays the list of supported languages
+translate detect "hello world" - detects language of text
+translate en:ru "hello world"  - or
+translate en:ru hello world    - translates from en to ru
+translate ru "hello world"     - or 
+translate ru hello world       - translated from auto-detected language to ru 
