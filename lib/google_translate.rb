@@ -17,6 +17,8 @@ module Google
     base_uri "http://ajax.googleapis.com/ajax/services/language/"
     default_params :v => "1.0"
     
+    LANGUAGES_LOOKUP_URL = "http://translate.google.com"
+    
     def self.Exception(*names)
       cl = Module === self ? self : Object
       names.each {|n| cl.const_set(n, Class.new(Exception))}
@@ -24,8 +26,6 @@ module Google
 
     Exception :MissingFromLanguage, :MissingToLanguage, :MissingTextLanguage,
               :TranslateServerIsDown, :InvalidResponse, :MissingText, :MissingTestText
-
-    URL2_STRING = "http://translate.google.com"
 
     def translate(from, to, from_text, options={})
       raise(MissingFromLanguage) if from.nil?
@@ -59,11 +59,11 @@ module Google
     end
   
     def supported_languages
-      call_service2(URL2_STRING , [])
+      fetch_languages(LANGUAGES_LOOKUP_URL , [])
     end
 
     private
-    def call_service2(request, keys)
+    def fetch_languages(request, keys)
       response = {}
 
       open(URI.escape(request)) do |stream|
