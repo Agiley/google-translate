@@ -33,7 +33,7 @@ module Google
       raise(MissingTextLanguage) if from_text.nil?
       
       begin
-        response = self.class.get("/translate", :query => {:langpair => "#{from}|#{to}", :q => from_text})
+        response = self.class.post("/translate", :query => {:langpair => "#{from}|#{to}"}, :body => {:q => from_text})
         response = (response && response.parsed_response) ? response.parsed_response : nil
         raise(TranslateServerIsDown) if (!response || response.empty?)
         raise(InvalidResponse, response["responseDetails"]) if response["responseStatus"] != 200 # success
